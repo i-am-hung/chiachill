@@ -1,19 +1,20 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+// import { Geist, Geist_Mono } from 'next/font/google';
+import { lexend } from '../fonts';
 import './globals.css';
 import SupabaseProvider from '../provider/supabase-provider';
 import { createSupabaseServerClient } from '../lib/supabase/server';
-import { ToastProvider, HeroUIProvider } from '@heroui/react';
+import HeroUIProviders from '../provider/heroui-provider';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
+// const geistSans = Geist({
+//   variable: '--font-geist-sans',
+//   subsets: ['latin'],
+// });
 
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
+// const geistMono = Geist_Mono({
+//   variable: '--font-geist-mono',
+//   subsets: ['latin'],
+// });
 
 export const metadata: Metadata = {
   title: 'ChiaChill',
@@ -31,16 +32,21 @@ export default async function RootLayout({
   } = await supabase.auth.getSession();
 
   return (
-    <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <HeroUIProvider>
-          <ToastProvider placement="top-center" />
+    <html lang="en" className={`${lexend.variable}`} suppressHydrationWarning>
+      <body className={`${lexend.variable} font-sans antialiased`}>
+        <HeroUIProviders
+          themeProps={{
+            attribute: 'class',
+            defaultTheme: 'light',
+            enableSystem: true,
+            enableColorScheme: false,
+            disableTransitionOnChange: true,
+          }}
+        >
           <SupabaseProvider initialSession={session}>
             {children}
           </SupabaseProvider>
-        </HeroUIProvider>
+        </HeroUIProviders>
       </body>
     </html>
   );
