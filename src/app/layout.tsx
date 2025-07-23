@@ -33,7 +33,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={`${lexend.variable}`} suppressHydrationWarning>
-      <body className={`${lexend.variable} font-sans antialiased`}>
+      <body className={`font-sans antialiased`}>
         <HeroUIProviders
           themeProps={{
             attribute: 'class',
